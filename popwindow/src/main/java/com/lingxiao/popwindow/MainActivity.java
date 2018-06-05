@@ -1,0 +1,88 @@
+package com.lingxiao.popwindow;
+
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.button_qq_bottom)
+    Button btBottom;
+    private PopupWindow mPopWindow;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.button_qq_bottom)
+    public void showBottomPop(){
+        showPopupWindow();
+    }
+
+
+    private void showPopupWindow() {
+        backgroundAlpha(0.5f);
+        //设置contentView
+        View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.pop_pp_bottom, null);
+        mPopWindow = new PopupWindow(contentView,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setAnimationStyle(R.style.contextMenuAnim);
+        mPopWindow.setContentView(contentView);
+        //设置各个控件的点击响应
+        TextView tv1 = contentView.findViewById(R.id.pop_update);
+        TextView tv2 = contentView.findViewById(R.id.pop_feedback);
+        TextView tv3 = contentView.findViewById(R.id.pop_quit);
+        TextView tv4 = contentView.findViewById(R.id.pop_cancel);
+        //显示PopupWindow
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+        View rootview = LayoutInflater.from(MainActivity.this)
+                .inflate(R.layout.activity_main, null);
+        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+
+        mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1);
+            }
+        });
+
+        tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        tv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+}
