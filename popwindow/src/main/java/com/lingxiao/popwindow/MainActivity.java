@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mPopWindow = new PopupWindow(contentView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        //动画效果
         mPopWindow.setAnimationStyle(R.style.contextMenuAnim);
         mPopWindow.setContentView(contentView);
         //设置各个控件的点击响应
@@ -62,6 +63,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,4 +98,5 @@ public class MainActivity extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
 }
