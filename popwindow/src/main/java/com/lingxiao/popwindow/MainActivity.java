@@ -1,7 +1,9 @@
 package com.lingxiao.popwindow;
 
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +37,37 @@ public class MainActivity extends AppCompatActivity {
         showPopupWindow();
     }
 
+    @OnClick(R.id.button_simple_top)
+    public void showSimpleTop(View view){
+        PopwindowUtil popwindowUtil = new PopwindowUtil
+                .PopupWindowBuilder(this)
+                .setView(R.layout.pop_simple)
+                .setFocusable(true)
+                .setTouchable(true)
+                .setOutsideTouchable(true)
+                .create();
+        popwindowUtil.showAsDropDown(view,0,-(view.getHeight()+popwindowUtil.getmHeight()+10));
+    }
 
+    @OnClick(R.id.button_simple_bottom)
+    public void showSimpleBottom(View view){
+        final PopwindowUtil popwindowUtil = new PopwindowUtil
+                .PopupWindowBuilder(this)
+                .setView(R.layout.pop_simple)
+                .setFocusable(true)
+                .setTouchable(true)
+                .setOutsideTouchable(true)
+                .create();
+        popwindowUtil.showAsDropDown(view,0,10);
+
+        popwindowUtil.setOnItemClick(R.id.tv_simple_one, new PopwindowUtil.ItemClickListener() {
+            @Override
+            public void onItemClick(View view) {
+                Toast.makeText(getApplicationContext(),"我是第一个",Toast.LENGTH_SHORT).show();
+                popwindowUtil.dissmiss();
+            }
+        });
+    }
     private void showPopupWindow() {
         backgroundAlpha(0.5f);
         //设置contentView
@@ -55,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         View rootview = LayoutInflater.from(MainActivity.this)
                 .inflate(R.layout.activity_main, null);
         mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-
         mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
