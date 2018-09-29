@@ -1,5 +1,6 @@
 package com.widget.lingxiao.selfwidget;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.widget.lingxiao.selfwidget.anim.RippleAnimation;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private int colorAccent = Color.parseColor("#FF4081");
     private int colorWhite = Color.parseColor("#FFFFFF");
     private ColorDrawable drawableAccent,drawableWhite;
+    private Button colorFullBtn,huajiBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,20 @@ public class MainActivity extends AppCompatActivity {
                     position = 1;
                 }
 
+            }
+        });
+        colorFullBtn = findViewById(R.id.button_circle);
+        colorFullBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ColorFullActivity.class));
+            }
+        });
+        huajiBtn = findViewById(R.id.button_huaji);
+        huajiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),HuaJiActivity.class));
             }
         });
     }
